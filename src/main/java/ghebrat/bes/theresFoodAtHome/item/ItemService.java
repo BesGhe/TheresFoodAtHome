@@ -22,6 +22,10 @@ public class ItemService {
         return itemRepo.findAll();
     }
 
+    public Optional<Item> showItem(Long itemId) {
+        return itemRepo.findById(itemId);
+    }
+
     public void createItem(Item item) throws ItemNotFoundException {
         if(itemRepo.findByName(item.getName()).isPresent()){
             throw new ItemNotFoundException("item already added");
@@ -46,6 +50,10 @@ public class ItemService {
         if (name !=null && name.length()>0
                 && !Objects.equals(item.getName(), name)){
             Optional<Item> itemOptional = itemRepo.findByName(name);
+            if(itemOptional.isPresent()){
+                throw new ItemNotFoundException("Item already exists");
+            }
+            item.setName(name);
         }
 
         if(itemType !=null
@@ -58,11 +66,7 @@ public class ItemService {
         && !Objects.equals(item.getLocation(), itemLocation)){
             item.setLocation(itemLocation);
         }
-
     }
-
-
-
 
 
 }
