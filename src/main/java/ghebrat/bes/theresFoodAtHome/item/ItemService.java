@@ -26,16 +26,16 @@ public class ItemService {
         return itemRepo.findById(itemId);
     }
 
-    public void createItem(Item item) throws ItemNotFoundException {
+    public void createItem(Item item) throws ItemException {
         if(itemRepo.findByName(item.getName()).isPresent()){
-            throw new ItemNotFoundException("item already added");
+            throw new ItemException("item already added");
         }
         itemRepo.save(item);
     }
 
-    public void deleteItem(Long itemId) throws  ItemNotFoundException{
+    public void deleteItem(Long itemId) throws ItemException {
         if(!itemRepo.existsById(itemId)){
-            throw new ItemNotFoundException("Item with id: " + itemId + "doesn't even exist");
+            throw new ItemException("Item with id: " + itemId + "doesn't even exist");
         }
         itemRepo.deleteById(itemId);
     }
@@ -44,14 +44,14 @@ public class ItemService {
     public void updateItem(Long itemId,
                            String name, String itemType,
                            String itemLocation)
-            throws ItemNotFoundException {
-        Item item = itemRepo.findById(itemId).orElseThrow(() -> new ItemNotFoundException("Item with ID: " + itemId + "doesn't even exist"));
+            throws ItemException {
+        Item item = itemRepo.findById(itemId).orElseThrow(() -> new ItemException("Item with ID: " + itemId + "doesn't even exist"));
 
         if (name !=null && name.length()>0
                 && !Objects.equals(item.getName(), name)){
             Optional<Item> itemOptional = itemRepo.findByName(name);
             if(itemOptional.isPresent()){
-                throw new ItemNotFoundException("Item already exists");
+                throw new ItemException("Item already exists");
             }
             item.setName(name);
         }

@@ -28,12 +28,12 @@ public class ItemController {
     }
 
     @PostMapping
-    public void addNewItem(@RequestBody Item item) throws ItemNotFoundException {
+    public void addNewItem(@RequestBody Item item) throws ItemException {
         itemService.createItem(item);
     }
 
     @DeleteMapping("/{itemId}")
-    public void deleteItem(@PathVariable ("itemId") Long itemId) throws ItemNotFoundException {
+    public void deleteItem(@PathVariable ("itemId") Long itemId) throws ItemException {
         itemService.deleteItem(itemId);
     }
 
@@ -41,10 +41,8 @@ public class ItemController {
     public void updateItem(@PathVariable ("itemId") Long itemId,
                            @RequestParam(required = false) String name, //will be var name for param
                            @RequestParam(required = false) String type,
-                           @RequestParam(required = false) String location) throws ItemNotFoundException {
+                           @RequestParam(required = false) String location) throws ItemException {
         itemService.updateItem(itemId, name, type, location);
 
     }
-
-
 }
