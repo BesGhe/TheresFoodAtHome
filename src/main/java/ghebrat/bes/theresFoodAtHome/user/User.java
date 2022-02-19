@@ -1,14 +1,13 @@
 package ghebrat.bes.theresFoodAtHome.user;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class User {
 
-    @Id
-    private Long id;
+    @Id //current focus on just one account
+    private Integer id;
     private String firstName;
     private String lastName;
     private String email;
@@ -23,11 +22,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
